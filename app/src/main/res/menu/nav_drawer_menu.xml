@@ -3,7 +3,9 @@
 
     <item
         android:id="@+id/miItem1"
-        android:title="Item 1"/>
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"
+        />
 
     <item
         android:id="@+id/miItem2"
@@ -11,7 +13,8 @@
 
     <item
         android:id="@+id/miItem3"
-        android:title="Item 3"/>
+        android:title="Logout"
+        android:icon="@drawable/ic_login"/>
 
 
 </menu>

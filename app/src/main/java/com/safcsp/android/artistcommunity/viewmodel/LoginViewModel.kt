@@ -24,8 +24,8 @@ class LoginViewModel() :ViewModel(){
         appRepository.login(email,password)
         // userMutableLiveData=appRepository.userMutableLiveData
     }
-     fun logout(){
-        appRepository.logout()
-        // userMutableLiveData=appRepository.userMutableLiveData
-    }
+//     fun logout(){
+//        appRepository.logout()
+//        // userMutableLiveData=appRepository.userMutableLiveData
+//    }
 }

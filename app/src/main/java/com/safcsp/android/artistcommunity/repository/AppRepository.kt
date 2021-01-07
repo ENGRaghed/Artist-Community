@@ -25,12 +25,12 @@ init {
         firebaseAuth.createUserWithEmailAndPassword(email,password)
             .addOnSuccessListener {task ->
                 val user = User(name = name)
-                Log.i("SEC : ","sign up seccessful")
+                Log.i("SEC : ","sign up successfully")
                 userMutableLiveData.value = firebaseAuth.currentUser
                 firebaseAuth.currentUser?.uid?.let {
                     FirebaseDatabase.getInstance().getReference("Users")
                         .child(it).setValue(user).addOnSuccessListener {
-                            Log.i("SEC1 : ", "sign up with additonal info successfully")
+                            Log.i("SEC1 : ", "sign up with additional info successfully")
                         }.addOnFailureListener{exception ->
                             Log.i("SEC fail : ", "$exception")
                         }
@@ -56,10 +56,10 @@ init {
         }
     }
 
-    fun logout() {
-        firebaseAuth.signOut()
-        logoutMutableLiveData.postValue(true)
-    }
+//    fun logout() {
+//        firebaseAuth.signOut()
+//        logoutMutableLiveData.postValue(true)
+//    }
     fun updateStatus(){
         if(firebaseAuth.currentUser !=null){
             userMutableLiveData.postValue(firebaseAuth.currentUser)
