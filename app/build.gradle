@@ -44,6 +44,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
     implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -61,4 +62,9 @@ dependencies {
     // Declare the dependency for the Realtime Database library
 // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    implementation 'com.hbb20:ccp:2.4.4'
+
 }

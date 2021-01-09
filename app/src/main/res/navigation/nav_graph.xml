@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_homeFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editProfile"
+            app:destination="@id/editProfile" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -49,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.safcsp.android.artistcommunity.ProfileFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
@@ -57,4 +60,8 @@
         android:name="com.safcsp.android.artistcommunity.UploadFragment"
         android:label="fragment_upload"
         tools:layout="@layout/fragment_upload" />
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.safcsp.android.artistcommunity.ui.EditProfile"
+        android:label="EditProfile" />
 </navigation>

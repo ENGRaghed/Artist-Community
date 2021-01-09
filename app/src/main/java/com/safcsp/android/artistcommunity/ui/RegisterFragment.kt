@@ -43,11 +43,11 @@ class RegisterFragment : Fragment() {
                 email.requestFocus()
                 return@setOnClickListener
             }
-            if (!Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
-                email.error = "enter valid email !!"
-                email.requestFocus()
-                return@setOnClickListener
-            }
+//            if (!Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
+//                email.error = "enter valid email !!"
+//                email.requestFocus()
+//                return@setOnClickListener
+//            }
             if (password.text.isNullOrEmpty()) {
                 password.error = "enter password !!"
                 password.requestFocus()
