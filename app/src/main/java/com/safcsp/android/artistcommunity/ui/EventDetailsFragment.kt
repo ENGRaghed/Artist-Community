@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.Event
 import com.safcsp.android.artistcommunity.data.Latlng
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 class EventDetailsFragment : BottomSheetDialogFragment() {

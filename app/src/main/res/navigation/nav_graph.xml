@@ -57,4 +57,42 @@
         android:name="com.safcsp.android.artistcommunity.UploadFragment"
         android:label="fragment_upload"
         tools:layout="@layout/fragment_upload" />
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.AddEventFragment"
+        android:label="fragment_add_event"
+        tools:layout="@layout/fragment_add_event" >
+        <action
+            android:id="@+id/action_addEventFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.safcsp.android.artistcommunity.ui.ProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <dialog
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </dialog>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.EventFragment"
+        android:label="EventFragment" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_addEventFragment"
+            app:destination="@id/addEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.safcsp.android.artistcommunity.ui.EditProfile"
+        android:label="EditProfile" />
 </navigation>
