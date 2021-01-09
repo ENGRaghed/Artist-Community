@@ -19,6 +19,7 @@ import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseUser
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.viewmodel.LoginViewModel
+import org.w3c.dom.Text
 
 
 class LoginFragment : Fragment() {
@@ -26,9 +27,9 @@ class LoginFragment : Fragment() {
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var loginButton: Button
-    lateinit var registerButton: Button
+    lateinit var registerButton: TextView
     lateinit var loginViewModel:LoginViewModel
-    lateinit var forgetPassword:Button
+    lateinit var forgetPassword:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,14 +54,14 @@ class LoginFragment : Fragment() {
         email=view.findViewById(R.id.username) as EditText
         password=view.findViewById(R.id.password) as EditText
         loginButton=view.findViewById(R.id.loginbtn) as Button
-        registerButton =view.findViewById(R.id.registerbtn) as Button
+        registerButton =view.findViewById(R.id.registerbtn) as TextView
 
         registerButton.setOnClickListener {
 
             getView()?.let { it1 -> Navigation.findNavController(it1)
                 .navigate(R.id.action_loginFragment_to_registerFragment) }
         }
-        forgetPassword=view.findViewById(R.id.forgetpassword) as Button
+        forgetPassword=view.findViewById(R.id.forgetpassword) as TextView
 
         forgetPassword.setOnClickListener {
 

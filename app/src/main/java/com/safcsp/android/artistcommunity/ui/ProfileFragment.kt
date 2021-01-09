@@ -54,7 +54,6 @@ class ProfileFragment : Fragment() {
                             object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     val bio = snapshot.child("bio").value.toString()
-                                    val phone = snapshot.child("phone").value.toString()
                                     text_bio.setText(bio).toString()
                                 }
 
