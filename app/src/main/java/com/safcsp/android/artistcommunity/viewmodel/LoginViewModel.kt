@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.safcsp.android.artistcommunity.repository.AppRepository
 
 class LoginViewModel() :ViewModel(){
-    private var appRepository:AppRepository = AppRepository()
+     var appRepository:AppRepository = AppRepository()
     var userMutableLiveData:MutableLiveData<FirebaseUser> = appRepository.userMutableLiveData
     var isLoggedInMutableLiveData:MutableLiveData<Boolean> = appRepository.logoutMutableLiveData
 

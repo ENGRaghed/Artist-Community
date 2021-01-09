@@ -64,4 +64,8 @@
         android:id="@+id/editProfile"
         android:name="com.safcsp.android.artistcommunity.ui.EditProfile"
         android:label="EditProfile" />
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.safcsp.android.artistcommunity.ui.ChangePassword"
+        android:label="ChangePassword" />
 </navigation>

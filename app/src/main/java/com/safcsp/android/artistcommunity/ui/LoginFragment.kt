@@ -1,12 +1,17 @@
 package com.safcsp.android.artistcommunity.ui
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +28,7 @@ class LoginFragment : Fragment() {
     lateinit var loginButton: Button
     lateinit var registerButton: Button
     lateinit var loginViewModel:LoginViewModel
-
+    lateinit var forgetPassword:Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +40,7 @@ class LoginFragment : Fragment() {
         if((requireActivity() as AppCompatActivity).supportActionBar!=null){
             (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
-
+        forgetPassword=view.findViewById(R.id.forgetpassword)
         loginViewModel= ViewModelProvider(this).get(LoginViewModel::class.java)
         loginViewModel.userMutableLiveData.observe(viewLifecycleOwner,Observer<FirebaseUser>(){
            if(it !=null){
@@ -55,9 +60,15 @@ class LoginFragment : Fragment() {
             getView()?.let { it1 -> Navigation.findNavController(it1)
                 .navigate(R.id.action_loginFragment_to_registerFragment) }
         }
+        forgetPassword=view.findViewById(R.id.forgetpassword) as Button
 
+        forgetPassword.setOnClickListener {
+
+                forgetPassword(email)
+
+        }
         loginButton.setOnClickListener {
-            val emailedt = email.text.toString()
+            val emailedt = email.text.toString().trim()
             val passwordedt = password.text.toString()
 
             if (emailedt.length > 0 && passwordedt.length > 0) {
@@ -66,6 +77,26 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
         return view
     }
+private fun forgetPassword(email:EditText){
+    if(email.text.toString().isEmpty()){
+        email.error = "Enter Your Email"
+        email.requestFocus()
+
+        return
+    }
+    if(!Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()){
+        return
+    }
+    loginViewModel.appRepository.firebaseAuth
+        .sendPasswordResetEmail(email.text.toString().trim()).addOnCompleteListener {task->
+        if(task.isSuccessful){
+            Toast.makeText(context,"Email Sent",Toast.LENGTH_LONG).show()
+        }
+
+    }
+}
+
 }
