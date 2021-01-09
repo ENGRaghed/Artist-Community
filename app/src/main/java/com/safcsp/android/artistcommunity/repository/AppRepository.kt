@@ -13,7 +13,7 @@ import com.safcsp.android.artistcommunity.data.User
 
 class AppRepository() {
     //  private  var app:Application = application
-    private var firebaseAuth = FirebaseAuth.getInstance()
+     var firebaseAuth = FirebaseAuth.getInstance()
     var userMutableLiveData = MutableLiveData<FirebaseUser>()
     var logoutMutableLiveData = MutableLiveData<Boolean>()
 
