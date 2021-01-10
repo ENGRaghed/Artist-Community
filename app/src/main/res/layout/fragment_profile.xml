@@ -63,6 +63,7 @@
             android:layout_marginEnd="-4dp"
             android:layout_marginBottom="12dp">
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/image_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
