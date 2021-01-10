@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +22,7 @@ class LoginFragment : Fragment() {
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var loginButton: Button
-    lateinit var registerButton: Button
+    lateinit var registerButton: TextView
     lateinit var loginViewModel:LoginViewModel
 
 
@@ -48,7 +49,7 @@ class LoginFragment : Fragment() {
         email=view.findViewById(R.id.username) as EditText
         password=view.findViewById(R.id.password) as EditText
         loginButton=view.findViewById(R.id.loginbtn) as Button
-        registerButton =view.findViewById(R.id.registerbtn) as Button
+        registerButton =view.findViewById(R.id.registerbtn)
 
         registerButton.setOnClickListener {
 

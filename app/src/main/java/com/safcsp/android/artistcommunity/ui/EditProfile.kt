@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.User
+import kotlinx.android.synthetic.main.fragment_edit_profile.*
 
 
 class EditProfile : Fragment() {
@@ -77,7 +78,7 @@ class EditProfile : Fragment() {
             edit_text_name.setText(user.displayName)
             edit_text_phone.text = user.phoneNumber
         }
-        image_view.setOnClickListener {
+        edit_user_photo.setOnClickListener {
             takePictureIntent()
         }
 

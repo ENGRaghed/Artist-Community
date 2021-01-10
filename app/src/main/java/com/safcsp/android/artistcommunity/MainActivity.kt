@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.editProfile ->findNavController(R.id.fragment).navigate(R.id.editProfile)
-
                 R.id.miItem2 -> Toast.makeText(applicationContext,"Clicked Item 2",Toast.LENGTH_SHORT).show()
                 R.id.miItem3 -> logout()
 
