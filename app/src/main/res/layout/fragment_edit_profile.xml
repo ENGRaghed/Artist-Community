@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile"
+    tools:context=".ui.ProfileFragment">
+
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="217dp"
+        android:layout_height="207dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/edit_user_photo"
+        android:layout_width="60dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="180dp"
+        android:src="@drawable/ic_edit"
+        android:padding="8dp"
+        android:background="@drawable/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.723"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressbar_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/image_view"
+        app:layout_constraintEnd_toEndOf="@id/image_view"
+        app:layout_constraintStart_toStartOf="@id/image_view"
+        app:layout_constraintTop_toTopOf="@+id/image_view" />
+
+    <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="297dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="80dp"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:background="@drawable/field"
+        android:hint="اسم المستخدم"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.587"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+    <EditText
+        android:id="@+id/edit_text_bio"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:background="@drawable/field"
+        android:hint="نبذة مختصرة"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.576"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_name" />
+
+
+<!--    <EditText-->
+<!--        android:id="@+id/edit_text_phone"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:background="@drawable/field"-->
+<!--        android:digits="0123456789"-->
+<!--        android:hint="الهاتف"-->
+<!--        android:maxLength="10"-->
+<!--        android:padding="10dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:singleLine="true"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_text_bio" />-->
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+    <EditText
+        android:id="@+id/edit_text_phone"
+        android:layout_width="297dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/field"
+        android:hint="الهاتف"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_bio" />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_save"
+            android:layout_width="153dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button"
+            android:backgroundTint="@color/yellow"
+            android:text="حفظ"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_phone" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
