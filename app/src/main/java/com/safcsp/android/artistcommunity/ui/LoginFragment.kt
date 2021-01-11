@@ -83,7 +83,7 @@ class LoginFragment : Fragment() {
     }
 private fun forgetPassword(email:EditText){
     if(email.text.toString().isEmpty()){
-        email.error = "Enter Your Email"
+        email.error = "أدخل الحساب الشخصي"
         email.requestFocus()
 
         return
