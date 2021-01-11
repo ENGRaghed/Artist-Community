@@ -50,11 +50,7 @@ class ProfileFragment : Fragment() {
                 .addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         Log.i("UsersPhotos","$snapshot")
-                        /*
-                        UserPhoto ( var caption: String = "",
-                   val photoUrl: String,
-                   val date: String
-                         */
+
                         snapshot.children.forEach {
                             val userPhoto = UserPhoto(it.child("caption").value.toString(),
                                 it.child("photoUrl").value.toString(),
@@ -108,33 +104,7 @@ class ProfileFragment : Fragment() {
                     .load(image.photoUrl)
                     .into(photoView)
             }
-            Toast.makeText(context,"imageUrl",Toast.LENGTH_LONG).show()
-            Log.d("rawan","imageUrl")
-            //   if (firebaseAuth.currentUser != null) {
-//                FirebaseDatabase.getInstance().reference.child("UserPhotos")
-//                        .addValueEventListener(
-//                                object : ValueEventListener {
-//                                    override fun onDataChange(snapshot: DataSnapshot) {
-//                                        snapshot.child(firebaseAuth.currentUser!!.uid).children.forEach {
-//                                            val imageUrl = snapshot.child("photoUrl").value.toString()
-//                                            Toast.makeText(context,imageUrl,Toast.LENGTH_LONG).show()
-//                                            Log.d("rawan",imageUrl)
-//                                            photoView.let { photo ->
-//                                                Glide.with(itemView)
-//                                                        .load(imageUrl)
-//                                                        .circleCrop()
-//                                                        .into(photoView)
-//
-//                                            }
-//                                        }
-//
-//                                    }
-//
-//                                    override fun onCancelled(error: DatabaseError) {
-//                                    }
-//                                }
-//                        )
-            //    }
+
         }
     }
     private inner class ProfileAdapter(var image:List<UserPhoto>):
