@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -138,8 +139,8 @@ class AddEventFragment : Fragment() {
         val eventTitle = view.findViewById<EditText>(R.id.title_et)
         val eventDescription = view.findViewById<EditText>(R.id.description_et)
         val addEventButton = view.findViewById<Button>(R.id.add_event_bt)
-        val pickPhotoButton = view.findViewById<Button>(R.id.pick_photo_bt)
-        val datePicker = view.findViewById<FloatingActionButton>(R.id.date_picker_fab)
+        val pickPhotoButton = view.findViewById<ImageButton>(R.id.pick_photo_bt)
+        val datePicker = view.findViewById<ImageView>(R.id.date_picker_fab)
         val startDateTv = view.findViewById<TextView>(R.id.start_date_tv)
         val endDateTv = view.findViewById<TextView>(R.id.due_date_tv)
         var startDateLong : Long = 0
@@ -177,27 +178,27 @@ class AddEventFragment : Fragment() {
             val refId = ref.push().key
 
             if (!::imageUri.isInitialized){
-                Toast.makeText(context,"select image",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"إختر صورة",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (eventTitle.text.isNullOrEmpty()){
-                Toast.makeText(context,"enter event Title",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"ادخل عنوان الحدث",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (eventDescription.text.isNullOrEmpty()){
-                Toast.makeText(context,"enter event Description",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"ادخل نبذة عن الحدث",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (!::latlng.isInitialized){
-                Toast.makeText(context,"select location",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"حدد الموقع",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (startDateLong == 0.toLong()){
-                Toast.makeText(context,"select start date",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"حدد تاريخ الابتداء",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (endDateLong == 0.toLong()){
-                Toast.makeText(context,"select end date",Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"حدد تاريخ الانتهاء",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             Log.i("track Pick Photo :","$imageUri")

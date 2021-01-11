@@ -20,7 +20,6 @@ import com.safcsp.android.artistcommunity.viewmodel.LoginViewModel
 class HomeFragment : Fragment() {
 
     lateinit var text: TextView
-    lateinit var logout: Button
 
     val homeViewModel by lazy {
         ViewModelProvider(this).get(LoginViewModel::class.java)
@@ -38,17 +37,9 @@ class HomeFragment : Fragment() {
             (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        logout = view.findViewById(R.id.button2)
         text = view.findViewById(R.id.textView) as TextView
         text.text = firebaseAuth.currentUser?.email.toString()
 
-//        logout.setOnClickListener {
-//            homeViewModel.logout()
-//            getView()?.let { it1 ->
-//                Navigation.findNavController(it1)
-//                    .navigate(R.id.action_homeFragment_to_loginFragment)
-//            }
-//        }
         return view
     }
 }

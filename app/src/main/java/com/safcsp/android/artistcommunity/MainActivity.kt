@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         val navController= findNavController(R.id.fragment)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         bottomNavigantionView.setupWithNavController(navController)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
