@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.AddEventFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/event_photo"
+            android:layout_width="407dp"
+            android:layout_height="211dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/picture" />
+
+        <ImageButton
+            android:id="@+id/pick_photo_bt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/button2"
+            android:src="@drawable/ic_add_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.861"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/description_et"
+            android:layout_width="345dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/frame"
+            android:hint="نبذة عن الحدث"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:paddingStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_et" />
+
+        <EditText
+            android:id="@+id/title_et"
+            android:layout_width="276dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/frame"
+            android:hint="عنوان الحدث"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:paddingStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.579"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_photo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_event_bt"
+            android:layout_width="116dp"
+            android:layout_height="49dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="70dp"
+            android:background="@drawable/button"
+            android:backgroundTint="@color/yellow"
+            android:text="إضافة"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapView"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <TextView
+            android:layout_width="398dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_event_bt" />
+
+        <TextView
+            android:id="@+id/start_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="100dp"
+            android:text="11/12/2020"
+            android:textColor="@color/header"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_et" />
+
+        <ImageView
+            android:id="@+id/date_picker_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="44dp"
+            android:clickable="true"
+            android:src="@drawable/ic_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_et" />
+
+        <TextView
+            android:id="@+id/due_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="11/12/2020"
+            android:textColor="@color/header"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toStartOf="@+id/start_date_tv"
+            app:layout_constraintHorizontal_bias="0.545"
+            app:layout_constraintStart_toEndOf="@+id/date_picker_fab"
+            app:layout_constraintTop_toBottomOf="@+id/description_et" />
+
+        <fragment
+            android:id="@+id/mapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_fab" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
