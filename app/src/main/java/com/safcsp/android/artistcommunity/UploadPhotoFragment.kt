@@ -24,6 +24,7 @@ import java.util.*
 
 const val STORAGE_PHOTOS_PATH = "user photos/"
 const val DATABASE_PHOTOS_PATH = "UserPhotos"
+const val DATABASE_HOME_PATH = "Photos"
 
 class UploadPhotoFragment : Fragment() {
 
@@ -33,6 +34,7 @@ class UploadPhotoFragment : Fragment() {
     private lateinit var submit: Button
     private val reference = FirebaseStorage.getInstance().reference
     private val root = FirebaseDatabase.getInstance().getReference(DATABASE_PHOTOS_PATH)
+    private val homeRoot = FirebaseDatabase.getInstance().getReference(DATABASE_HOME_PATH)
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreateView(
@@ -57,13 +59,20 @@ class UploadPhotoFragment : Fragment() {
             if (imageUri != null) {
                 ref.putFile(imageUri).addOnSuccessListener {
                     ref.downloadUrl.addOnSuccessListener {
-                        val format = SimpleDateFormat("yyyy-MM-dd")
-                        val now: String = format.format(Date())
-                        val photo = UserPhoto(caption.text.toString(), it.toString(),now)
+                        //val format = SimpleDateFormat("yyyy-MM-dd")
+                        //val now: String = format.format(Date().time)
                         if (currentUser != null) {
+                            //user photo:
+                            val photo = UserPhoto(caption.text.toString(), it.toString(),Date().time)
                             root.child(currentUser.uid)
                                 .push()
                                 .setValue(photo)
+                            //Home:
+                            val photo2 = HomePhoto(caption.text.toString(),
+                                it.toString(),
+                                Date().time,
+                                currentUser.uid)
+                            homeRoot.push().setValue(photo2)
                         }
                     }
                 }.addOnProgressListener {
