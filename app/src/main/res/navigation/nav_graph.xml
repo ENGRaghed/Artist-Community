@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/profileChatFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_homeFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileChatFragment"
+            app:destination="@id/profileChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -113,5 +116,19 @@
         <argument
             android:name="bitmap"
             app:argType="android.graphics.Bitmap" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/profileChatFragment"
+        android:name="com.safcsp.android.artistcommunity.ui.ProfileChatFragment"
+        android:label="fragment_profile_chat"
+        tools:layout="@layout/fragment_profile_chat" >
+        <action
+            android:id="@+id/action_profileChatFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 </navigation>
