@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,10 +21,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.safcsp.android.artistcommunity.R
+import com.safcsp.android.artistcommunity.UploadPhotoFragmentArgs
 import com.safcsp.android.artistcommunity.UserPhoto
+import com.safcsp.android.artistcommunity.data.User
 
 
 class ProfileChatFragment : Fragment() {
+    private val args by navArgs<ProfileChatFragmentArgs>()
     private lateinit var photoRecyclerView: RecyclerView
     private lateinit var chatBtn: ImageView
     private var photo = emptyList<UserPhoto>()
@@ -39,7 +43,7 @@ class ProfileChatFragment : Fragment() {
         photoRecyclerView = view.findViewById(R.id.image_recycler_view)
         photoRecyclerView.layoutManager = GridLayoutManager(context, 3)
         photoRecyclerView.adapter = adapter
-        val key = FirebaseAuth.getInstance().currentUser?.uid
+        val key = args.userId
         key?.let {
             FirebaseDatabase.getInstance().reference.child("UserPhotos").child(it)
                 .addValueEventListener(object : ValueEventListener {
@@ -50,7 +54,7 @@ class ProfileChatFragment : Fragment() {
                                 UserPhoto(
                                     it.child("caption").value.toString(),
                                     it.child("photoUrl").value.toString(),
-                                    it.child("date").value.toString()
+                                    it.child("date").value.toString().toLong()
                                 )
                             photo+=userPhoto
                         }
@@ -71,13 +75,21 @@ class ProfileChatFragment : Fragment() {
         val text_bio = view.findViewById<TextView>(R.id.text_bio)
         chatBtn= view.findViewById(R.id.imageView2) as ImageView
 
-        if (firebaseAuth.currentUser != null) {
+        if (args.userId != null) {
             FirebaseDatabase.getInstance().reference.child("Users")
-                .child(firebaseAuth.currentUser!!.uid)
+                .child(args.userId)
                 .addListenerForSingleValueEvent(
                     object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val bio = snapshot.child("bio").value.toString()
+                            val user=snapshot.child("name").value.toString()
+                            val imageurl=snapshot.child("profileImage").value.toString()
+
+                                Glide.with(image_view)
+                                    .load(imageurl)
+                                    .circleCrop()
+                                    .into(image_view)
+                            text_name.setText(user).toString()
                             text_bio.setText(bio).toString()
                         }
                         override fun onCancelled(error: DatabaseError) {
@@ -85,17 +97,12 @@ class ProfileChatFragment : Fragment() {
                     }
                 )
         }
-        currentUser?.let { user ->
-            Glide.with(this)
-                .load(user.photoUrl)
-                .circleCrop()
-                .into(image_view)
-            text_name.setText(user.displayName)
-        }
+
+
 
         chatBtn.setOnClickListener {
       val action=
-          ProfileChatFragmentDirections.actionProfileChatFragmentToChatFragment()
+          ProfileChatFragmentDirections.actionProfileChatFragmentToChatFragment(args.userId)
             findNavController().navigate(action)
         }
     }

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,19 +20,21 @@ import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.Chat
 import com.safcsp.android.artistcommunity.data.User
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_chat.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
 class ChatFragment : Fragment() {
+    private val args by navArgs<ChatFragmentArgs>()
+
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
     var chatList = ArrayList<Chat>()
     private lateinit var user: User
-    private lateinit var userId: String
+  //  private lateinit var userId: String
 
-    private lateinit var backBtn: ImageView
     private lateinit var profileImage: CircleImageView
     private lateinit var sendBtn: ImageButton
     private lateinit var messageEd: EditText
@@ -41,12 +45,10 @@ class ChatFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //get user id by naviagtion args
         user= User()
-        userId= UUID.randomUUID().toString()
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
-        firebaseUser?.uid?.let { readMessage(it, userId) }
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(args.userId)
+        firebaseUser?.uid?.let { readMessage(it, args.userId) }
         adapter= ChatAdapter(chatList)
     }
 
@@ -55,7 +57,6 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view=  inflater.inflate(R.layout.fragment_chat, container, false)
-        backBtn= view.findViewById(R.id.imgBack)
         sendBtn= view.findViewById(R.id.btnSendMessage)
         messageEd= view.findViewById(R.id.etMessage)
         userNameTv= view.findViewById(R.id.tvUserName)
@@ -76,34 +77,29 @@ class ChatFragment : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                 var user: User
-                snapshot.children.forEach{
-                     user = User(it.child("name").value.toString(), it.child("profileImage").value.toString(),
-                        it.child("bio").value.toString(),it.child("phone").value.toString())
-                }
-                userNameTv.text = User().name
-                if (User().profileImage == "") {
-                    profileImage.setImageResource(R.drawable.ic_baseline_account3_circle_24)
+
+                val user = snapshot.getValue(User::class.java)
+                tvUserName.text = user!!.name
+                if (user.profileImage == "") {
+                  profileImage.setImageResource(R.drawable.ic_baseline_account3_circle_24)
                 } else {
-                    Glide.with(this@ChatFragment).load(User().profileImage).into(profileImage)
+                    Glide.with(this@ChatFragment).load(user.profileImage).into(profileImage)
                 }
             }
         })
 
-        FirebaseAuth.getInstance().currentUser?.uid?.let { readMessage(it,userId) }
+        FirebaseAuth.getInstance().currentUser?.uid?.let { readMessage(it,args.userId) }
         sendBtn.setOnClickListener {
             var message: String = messageEd.text.toString()
             if (message.isEmpty()) {
                 Toast.makeText(requireContext(), "message is empty", Toast.LENGTH_SHORT).show()
                 messageEd.setText("")
             } else {
-                firebaseUser?.uid?.let { it1 -> sendMessage(it1, userId, message) }
+                firebaseUser?.uid?.let { it1 -> sendMessage(it1, args.userId, message) }
                 messageEd.setText("")
             }
         }
-        backBtn.setOnClickListener {
-            //navigate
-        }
+
     }
 
     private fun sendMessage(senderId: String, receiverId: String, message: String) {
@@ -145,10 +141,6 @@ class ChatFragment : Fragment() {
                 }
 
                 adapter.setData(chatList)
-//
-//                val chatAdapter = ChatAdapter(this@ChatActivity, chatList)
-//
-//                chatRecyclerView.adapter = chatAdapter
             }
         })
     }

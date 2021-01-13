@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -148,11 +149,14 @@ class HomeFragment : Fragment() {
 
             acc.setOnClickListener {
                 Toast.makeText(requireContext(),homeItem.publisher,Toast.LENGTH_LONG).show()
-
+                val action= HomeFragmentDirections.actionHomeFragmentToProfileChatFragment(homeItem.publisher)
+                findNavController().navigate(action)
             }
 
             accPhoto.setOnClickListener {
                 Toast.makeText(requireContext(),homeItem.publisher,Toast.LENGTH_LONG).show()
+                val action= HomeFragmentDirections.actionHomeFragmentToProfileChatFragment(homeItem.publisher)
+                findNavController().navigate(action)
             }
 
         }
