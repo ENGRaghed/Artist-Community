@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
                         snapshot.children.forEach {
                             val userPhoto = UserPhoto(it.child("caption").value.toString(),
                                 it.child("photoUrl").value.toString(),
-                                it.child("date").value.toString())
+                                it.child("date").value.toString().toLong())
                             photo+=userPhoto
                         }
                         adapter.setData(photo)
