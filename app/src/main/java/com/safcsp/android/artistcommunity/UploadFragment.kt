@@ -19,6 +19,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -32,7 +33,7 @@ const val ACTIVITY_SELECT_IMAGE = 1234
 
 class UploadFragment : Fragment() {
 
-    private lateinit var takeButton: Button
+    private lateinit var takeButton: AppCompatButton
     private lateinit var galleryButton: Button
     private lateinit var textureView: TextureView
     private val orientation = SparseIntArray().apply {

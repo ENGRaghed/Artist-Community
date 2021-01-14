@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:title="Home"
+        android:title="الرئيسية"
         android:icon="@drawable/ic_baseline_home_24" />
     <item
         android:id="@+id/eventFragment"
-        android:title="Location"
+        android:title="المعارض"
         android:icon="@drawable/ic_baseline_location_on_24" />
     <item
         android:id="@+id/uploadFragment"
-        android:title="upload photo"
+        android:title="رفع صورة"
         android:icon="@drawable/ic_baseline_camera_" />
     <item
         android:id="@+id/profileFragment"
-        android:title="profile"
-        android:icon="@drawable/ic_baseline_account2"/>
+        android:title="الملف الشخصي"
+        android:icon="@drawable/user_image_profile"/>
 </menu>
