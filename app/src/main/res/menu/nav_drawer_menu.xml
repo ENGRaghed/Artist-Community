@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/editProfile"
-        android:title="Edit Profile"
+        android:title="تعديل الملف الشخصي"
         android:icon="@drawable/ic_settings"
         />
 
     <item
         android:id="@+id/changePassword"
-        android:icon="@drawable/user_image_profile"
-        android:title="Change Password"/>
+        android:icon="@drawable/lock"
+        android:title="تغيير الرقم السري"/>
 
     <item
         android:id="@+id/miItem3"
-        android:title="Logout"
+        android:title="تسجيل الخروج"
         android:icon="@drawable/ic_login"/>
 
 

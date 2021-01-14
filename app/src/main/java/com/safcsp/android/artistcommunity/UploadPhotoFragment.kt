@@ -13,6 +13,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +31,7 @@ class UploadPhotoFragment : Fragment() {
     private val args by navArgs<UploadPhotoFragmentArgs>()
     private lateinit var imageView: ImageView
     private lateinit var caption: EditText
-    private lateinit var submit: Button
+    private lateinit var submit: AppCompatButton
     private val reference = FirebaseStorage.getInstance().reference
     private val root = FirebaseDatabase.getInstance().getReference(DATABASE_PHOTOS_PATH)
     private val currentUser = FirebaseAuth.getInstance().currentUser
