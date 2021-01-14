@@ -70,7 +70,7 @@ class RegisterFragment : Fragment() {
             }
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
                 loginViewModel.register(
-                    email.text.toString(),
+                    email.text.toString().trim(),
                     password.text.toString(),
                     name.text.toString()
                 ).observe(viewLifecycleOwner, Observer {firebaseUser->
