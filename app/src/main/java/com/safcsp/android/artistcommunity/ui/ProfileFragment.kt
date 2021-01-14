@@ -80,6 +80,7 @@ class ProfileFragment : Fragment() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val bio = snapshot.child("bio").value.toString()
                             text_bio.setText(bio).toString()
+                            text_name.setText(snapshot.child("name").value.toString())
                         }
                         override fun onCancelled(error: DatabaseError) {
                         }
