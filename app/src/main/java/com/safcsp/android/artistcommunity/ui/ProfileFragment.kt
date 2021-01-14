@@ -78,22 +78,24 @@ class ProfileFragment : Fragment() {
                 .addListenerForSingleValueEvent(
                     object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
+
+                            val user=snapshot.child("name").value.toString()
+                            val imageurl=snapshot.child("profileImage").value.toString()
                             val bio = snapshot.child("bio").value.toString()
+                            Glide.with(image_view)
+                                .load(imageurl)
+                                .circleCrop()
+                                .into(image_view)
+                            text_name.setText(user).toString()
                             text_bio.setText(bio).toString()
-                            text_name.setText(snapshot.child("name").value.toString())
+
                         }
                         override fun onCancelled(error: DatabaseError) {
                         }
                     }
                 )
         }
-        currentUser?.let { user ->
-            Glide.with(this)
-                .load(user.photoUrl)
-                .circleCrop()
-                .into(image_view)
-            text_name.setText(user.displayName)
-        }
+
     }
     private inner class ProfileHolder(view:View):RecyclerView.ViewHolder(view) {
         lateinit var image: UserPhoto
