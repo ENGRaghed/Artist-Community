@@ -189,8 +189,27 @@ class ChatFragment : Fragment() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         lateinit var chat: Chat
         private val messageTv: TextView = itemView.findViewById(R.id.tvMessage)
+        private val image: CircleImageView = itemView.findViewById(R.id.userImage)
+
         fun bind(chat: Chat) {
             messageTv.text= chat.message
+            var sender= FirebaseDatabase.getInstance().getReference("Users")
+                .child("${chat.senderId}")
+
+            sender.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    if (user!!.profileImage == "") {
+                        image.setImageResource(R.drawable.ic_baseline_account3_circle_24)
+                    } else {
+                        Glide.with(image).load(user.profileImage).into(image)
+                    }
+                }
+            })
         }
     }
 }
