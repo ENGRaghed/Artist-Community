@@ -26,6 +26,7 @@ import com.safcsp.android.artistcommunity.data.User
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 
 
+
 class EditProfile : Fragment() {
     var currentPath: Uri? = null
     private val DEFAULT_IMAGE_URL = "https://picsum.photos/200"
@@ -61,15 +62,8 @@ class EditProfile : Fragment() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val bio = snapshot.child("bio").value.toString()
                             val phone = snapshot.child("phone").value.toString()
-                            val user=snapshot.child("name").value.toString()
-                            val imageurl=snapshot.child("profileImage").value.toString()
                             edit_text_bio.setText(bio).toString()
                             edit_text_phone.setText(phone).toString()
-                            edit_text_name.setText(user)
-                            Glide.with(image_view)
-                                .load(imageurl)
-                                .circleCrop()
-                                .into(image_view)
                         }
 
                         override fun onCancelled(error: DatabaseError) {
@@ -78,23 +72,34 @@ class EditProfile : Fragment() {
                     }
                 )
         }
-
-        edit_user_photo.setOnClickListener {
+        currentUser?.let { user ->
+            Glide.with(this)
+                .load(user.photoUrl)
+                .circleCrop()
+                .into(image_view)
+            edit_text_name.setText(user.displayName)
+            edit_text_phone.text = user.phoneNumber
+        }
+        image_view.setOnClickListener {
             takePictureIntent()
         }
 
         button_save.setOnClickListener {
 
-            val photo = User().profileImage.toUri()
+            val photo = when {
+                ::imageUri.isInitialized -> imageUri
+                currentUser?.photoUrl == null -> Uri.parse(DEFAULT_IMAGE_URL)
+                else -> currentUser.photoUrl
+            }
 
             val name = edit_text_name.text.toString().trim()
 
 
-//            if (name.isEmpty()) {
-//                edit_text_name.error = "name required"
-//                edit_text_name.requestFocus()
-//                return@setOnClickListener
-//            }
+            if (name.isEmpty()) {
+                edit_text_name.error = "name required"
+                edit_text_name.requestFocus()
+                return@setOnClickListener
+            }
 
             val updates = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
@@ -114,15 +119,14 @@ class EditProfile : Fragment() {
 
                     }
                 }
-//            if (!::imageUri.isInitialized) {
-//                Toast.makeText(context, "select image", Toast.LENGTH_LONG).show()
-//                return@setOnClickListener
-//            }
-           //Log.i("track Pick Photo :", "$imageUri")
+            if (!::imageUri.isInitialized) {
+            imageUri= currentUser?.photoUrl!!
+            }
+            Log.i("track Pick Photo :", "$imageUri")
 
             val user = User(
                 name,
-                photo.toString(),
+                "$imageUri",
                 edit_text_bio.text.toString(),
                 edit_text_phone.text.toString()
             )
@@ -170,14 +174,14 @@ class EditProfile : Fragment() {
                 progressbar_pic.visibility = View.INVISIBLE
             }
             val image_view = view?.findViewById<ImageView>(R.id.image_view)
-           // image_view?.foreground?.alpha = 0
+            image_view?.foreground?.alpha = 0
 
             if (uploadTask.isSuccessful) {
                 storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                     urlTask.result?.let {
-                        User().profileImage = it.toString()
+                        imageUri = it
 
-                        //image_view?.foreground?.alpha = 0
+                        image_view?.foreground?.alpha = 0
                         image_view.let { image ->
                             Glide.with(this)
                                 .load(bitmap)
