@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.makeramen.roundedimageview.RoundedTransformationBuilder
+import com.safcsp.android.artistcommunity.MainActivity
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.User
 import com.safcsp.android.artistcommunity.viewmodel.HomeViewModel
@@ -49,7 +50,7 @@ class HomeFragment : Fragment() {
         recyclerView= view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter= HomeAdapter(listOf())
-
+        (activity as MainActivity).updateHeader()
         val ref= FirebaseDatabase.getInstance().getReference("Photos")
         var homeItems= mutableListOf<HomeItem>()
 

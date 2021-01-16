@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.safcsp.android.artistcommunity.MainActivity
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.User
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
@@ -97,6 +98,7 @@ class EditProfile : Fragment() {
                 ?.addOnCompleteListener { task ->
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
+                        (activity as MainActivity).updateHeader()
                         Toast.makeText(context, "تم تحديث الملف الشخصي", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context, task.exception?.message!!, Toast.LENGTH_LONG).show()

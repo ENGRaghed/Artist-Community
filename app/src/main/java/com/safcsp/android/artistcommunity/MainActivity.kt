@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private var firebaseAuth = FirebaseAuth.getInstance()
     var logoutMutableLiveData = MutableLiveData<Boolean>()
     lateinit var userPhoto:ImageView
+    lateinit var header: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +67,20 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        val header=navView.getHeaderView(0)
+      //  val header=navView.getHeaderView(0)
+        header=navView.getHeaderView(0)
+        userPhoto=header.findViewById(R.id.userPhoto) as ImageView
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            Glide.with(this)
+                .load(user.photoUrl)
+                .circleCrop()
+                .into(userPhoto)
+            val userName=header.findViewById<TextView>(R.id.userName)
+            userName.setText(user.displayName)
+        }
+    }
+
+    fun updateHeader(){
         userPhoto=header.findViewById(R.id.userPhoto) as ImageView
         FirebaseAuth.getInstance().currentUser?.let { user ->
             Glide.with(this)
@@ -88,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBottomNav() {
         bottomNavigantionView.visibility = View.VISIBLE
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     private fun hideBottomNav() {
@@ -96,6 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         firebaseAuth.signOut()
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         logoutMutableLiveData.postValue(true)
             findNavController(R.id.fragment)
                 .navigate(R.id.loginFragment)
