@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
@@ -23,7 +22,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.safcsp.android.artistcommunity.R
 import com.safcsp.android.artistcommunity.data.User
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
 
 
 class EditProfile : Fragment() {
@@ -33,7 +31,6 @@ class EditProfile : Fragment() {
     private val REQUEST_Gallery = 200
     private val currentUser = FirebaseAuth.getInstance().currentUser
     private val firebaseAuth = FirebaseAuth.getInstance()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +38,6 @@ class EditProfile : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,8 +47,6 @@ class EditProfile : Fragment() {
         val button_save = view.findViewById<Button>(R.id.button_save)
         val progressbar = view.findViewById<ProgressBar>(R.id.progressbar)
         val edit_text_bio = view.findViewById<EditText>(R.id.edit_text_bio)
-
-
         if (firebaseAuth.currentUser != null) {
             FirebaseDatabase.getInstance().reference.child("Users")
                 .child(firebaseAuth.currentUser!!.uid)
@@ -64,10 +58,8 @@ class EditProfile : Fragment() {
                             edit_text_bio.setText(bio).toString()
                             edit_text_phone.setText(phone).toString()
                         }
-
                         override fun onCancelled(error: DatabaseError) {
                         }
-
                     }
                 )
         }
@@ -79,52 +71,39 @@ class EditProfile : Fragment() {
             edit_text_name.setText(user.displayName)
             edit_text_phone.text = user.phoneNumber
         }
-        edit_user_photo.setOnClickListener {
+        image_view.setOnClickListener {
             takePictureIntent()
         }
-
         button_save.setOnClickListener {
-
             val photo = when {
                 ::imageUri.isInitialized -> imageUri
                 currentUser?.photoUrl == null -> Uri.parse(DEFAULT_IMAGE_URL)
                 else -> currentUser.photoUrl
             }
-
             val name = edit_text_name.text.toString().trim()
-
-
             if (name.isEmpty()) {
-                edit_text_name.error = "name required"
+                edit_text_name.error = "الرجاء تعبئة الاسم"
                 edit_text_name.requestFocus()
                 return@setOnClickListener
             }
-
             val updates = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .setPhotoUri(photo)
                 .build()
-
             progressbar.visibility = View.VISIBLE
-
             currentUser?.updateProfile(updates)
                 ?.addOnCompleteListener { task ->
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
-                        Snackbar.make(view,"تم تحديث الملف الشخصي",Snackbar.LENGTH_LONG).show()
-                       // Toast.makeText(context, "Profile Updated", Toast.LENGTH_LONG).show()
-
+                        Toast.makeText(context, "تم تحديث الملف الشخصي", Toast.LENGTH_LONG).show()
                     } else {
-                        Snackbar.make(view, task.exception?.message!!, Snackbar.LENGTH_LONG).show()
-
+                        Toast.makeText(context, task.exception?.message!!, Toast.LENGTH_LONG).show()
                     }
                 }
             if (!::imageUri.isInitialized) {
-                Toast.makeText(context, "اختر صورة", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+                imageUri= currentUser?.photoUrl!!
             }
             Log.i("track Pick Photo :", "$imageUri")
-
             val user = User(
                 name,
                 "$imageUri",
@@ -137,14 +116,11 @@ class EditProfile : Fragment() {
         }
 
     }
-
     private fun takePictureIntent() {
-
         val gallery = Intent(Intent.ACTION_PICK)
         gallery.type = "image/*"
         startActivityForResult(gallery, REQUEST_Gallery)
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -153,7 +129,6 @@ class EditProfile : Fragment() {
             currentPath?.let { uploadImageAndSaveUri(it) }
         }
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     private fun uploadImageAndSaveUri(bitmap: Uri) {
         val storageRef = FirebaseStorage.getInstance()
@@ -161,7 +136,6 @@ class EditProfile : Fragment() {
             .child("pics/${FirebaseAuth.getInstance().currentUser?.uid}")
         val upload = storageRef.putFile(bitmap)
         var progressbar_pic = view?.findViewById<ProgressBar>(R.id.progressbar_pic)
-
         if (progressbar_pic != null) {
             progressbar_pic.visibility = View.VISIBLE
         }
@@ -171,12 +145,10 @@ class EditProfile : Fragment() {
             }
             val image_view = view?.findViewById<ImageView>(R.id.image_view)
             image_view?.foreground?.alpha = 0
-
             if (uploadTask.isSuccessful) {
                 storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                     urlTask.result?.let {
                         imageUri = it
-
                         image_view?.foreground?.alpha = 0
                         image_view.let { image ->
                             Glide.with(this)
