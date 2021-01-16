@@ -33,7 +33,6 @@ class EditProfile : Fragment() {
     private val REQUEST_Gallery = 200
     private val currentUser = FirebaseAuth.getInstance().currentUser
     private val firebaseAuth = FirebaseAuth.getInstance()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +40,6 @@ class EditProfile : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,8 +49,6 @@ class EditProfile : Fragment() {
         val button_save = view.findViewById<Button>(R.id.button_save)
         val progressbar = view.findViewById<ProgressBar>(R.id.progressbar)
         val edit_text_bio = view.findViewById<EditText>(R.id.edit_text_bio)
-
-
         if (firebaseAuth.currentUser != null) {
             FirebaseDatabase.getInstance().reference.child("Users")
                 .child(firebaseAuth.currentUser!!.uid)
@@ -61,68 +57,58 @@ class EditProfile : Fragment() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val bio = snapshot.child("bio").value.toString()
                             val phone = snapshot.child("phone").value.toString()
-                            val user=snapshot.child("name").value.toString()
-                            val imageurl=snapshot.child("profileImage").value.toString()
                             edit_text_bio.setText(bio).toString()
                             edit_text_phone.setText(phone).toString()
-                            edit_text_name.setText(user)
-                            Glide.with(image_view)
-                                .load(imageurl)
-                                .circleCrop()
-                                .into(image_view)
                         }
-
                         override fun onCancelled(error: DatabaseError) {
                         }
-
                     }
                 )
         }
-
-        edit_user_photo.setOnClickListener {
+        currentUser?.let { user ->
+            Glide.with(this)
+                .load(user.photoUrl)
+                .circleCrop()
+                .into(image_view)
+            edit_text_name.setText(user.displayName)
+            edit_text_phone.text = user.phoneNumber
+        }
+        image_view.setOnClickListener {
             takePictureIntent()
         }
-
         button_save.setOnClickListener {
-
-            val photo = User().profileImage.toUri()
-
+            val photo = when {
+                ::imageUri.isInitialized -> imageUri
+                currentUser?.photoUrl == null -> Uri.parse(DEFAULT_IMAGE_URL)
+                else -> currentUser.photoUrl
+            }
             val name = edit_text_name.text.toString().trim()
-
-
-//            if (name.isEmpty()) {
-//                edit_text_name.error = "name required"
-//                edit_text_name.requestFocus()
-//                return@setOnClickListener
-//            }
-
+            if (name.isEmpty()) {
+                edit_text_name.error = "الرجاء ادخال الاسم"
+                edit_text_name.requestFocus()
+                return@setOnClickListener
+            }
             val updates = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .setPhotoUri(photo)
                 .build()
-
             progressbar.visibility = View.VISIBLE
-
             currentUser?.updateProfile(updates)
                 ?.addOnCompleteListener { task ->
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
-                        Toast.makeText(context, "Profile Updated", Toast.LENGTH_LONG).show()
-
+                        Toast.makeText(context, "تم تحديث الملف الشخصي", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context, task.exception?.message!!, Toast.LENGTH_LONG).show()
-
                     }
                 }
-//            if (!::imageUri.isInitialized) {
-//                Toast.makeText(context, "select image", Toast.LENGTH_LONG).show()
-//                return@setOnClickListener
-//            }
-           //Log.i("track Pick Photo :", "$imageUri")
-
+            if (!::imageUri.isInitialized) {
+                imageUri= currentUser?.photoUrl!!
+            }
+            Log.i("track Pick Photo :", "$imageUri")
             val user = User(
                 name,
-                photo.toString(),
+                "$imageUri",
                 edit_text_bio.text.toString(),
                 edit_text_phone.text.toString()
             )
@@ -130,21 +116,13 @@ class EditProfile : Fragment() {
                 FirebaseDatabase.getInstance().getReference("Users").child(it1).setValue(user)
             }
         }
-//add it later
-//        text_phone.setOnClickListener {
-//
-//            getView()?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.actionVerifyPhone) }
-//        }
 
     }
-
     private fun takePictureIntent() {
-
         val gallery = Intent(Intent.ACTION_PICK)
         gallery.type = "image/*"
         startActivityForResult(gallery, REQUEST_Gallery)
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -153,7 +131,6 @@ class EditProfile : Fragment() {
             currentPath?.let { uploadImageAndSaveUri(it) }
         }
     }
-
     @RequiresApi(Build.VERSION_CODES.M)
     private fun uploadImageAndSaveUri(bitmap: Uri) {
         val storageRef = FirebaseStorage.getInstance()
@@ -161,7 +138,6 @@ class EditProfile : Fragment() {
             .child("pics/${FirebaseAuth.getInstance().currentUser?.uid}")
         val upload = storageRef.putFile(bitmap)
         var progressbar_pic = view?.findViewById<ProgressBar>(R.id.progressbar_pic)
-
         if (progressbar_pic != null) {
             progressbar_pic.visibility = View.VISIBLE
         }
@@ -170,14 +146,12 @@ class EditProfile : Fragment() {
                 progressbar_pic.visibility = View.INVISIBLE
             }
             val image_view = view?.findViewById<ImageView>(R.id.image_view)
-           // image_view?.foreground?.alpha = 0
-
+            image_view?.foreground?.alpha = 0
             if (uploadTask.isSuccessful) {
                 storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                     urlTask.result?.let {
-                        User().profileImage = it.toString()
-
-                        //image_view?.foreground?.alpha = 0
+                        imageUri = it
+                        image_view?.foreground?.alpha = 0
                         image_view.let { image ->
                             Glide.with(this)
                                 .load(bitmap)

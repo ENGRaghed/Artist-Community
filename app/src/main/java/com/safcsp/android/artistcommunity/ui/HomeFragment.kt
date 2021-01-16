@@ -120,9 +120,36 @@ class HomeFragment : Fragment() {
         var acc: TextView = view.findViewById(R.id.account)
         var caption: TextView = view.findViewById(R.id.caption)
         var date: TextView = view.findViewById(R.id.date)
+        var like: ImageView = view.findViewById(R.id.like_image)
+
         fun bind(item: HomeItem) {
             homeItem= item
             Log.i("profileImage",item.profileImage.toString())
+            FirebaseAuth.getInstance().currentUser?.uid?.let {
+                FirebaseDatabase.getInstance().getReference("Likes").child(it).child(item.id)
+                    .addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.value == true){
+                                like.setImageResource(R.drawable.heart)
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+            }
+
+            like.setOnClickListener {
+                FirebaseAuth.getInstance().currentUser?.uid?.let {
+                    FirebaseDatabase.getInstance().getReference("Likes")
+                        .child(it).child(item.id)
+                        .setValue(true)
+                    like.setImageResource(R.drawable.heart)
+                }
+            }
+
             if(!item.profileImage.isNullOrEmpty()) {
                 val transformation: Transformation = RoundedTransformationBuilder()
                    // .borderColor(Color.BLACK)

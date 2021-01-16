@@ -44,6 +44,16 @@
         android:padding="5dp"
         tools:srcCompat="@tools:sample/avatars" />
 
+
+    <ImageView
+        android:id="@+id/like_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:layout_gravity="end"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/heart1" />
+
     <TextView
         android:id="@+id/caption"
         android:layout_width="match_parent"

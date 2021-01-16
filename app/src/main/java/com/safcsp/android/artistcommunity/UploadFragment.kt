@@ -34,7 +34,7 @@ const val ACTIVITY_SELECT_IMAGE = 1234
 class UploadFragment : Fragment() {
 
     private lateinit var takeButton: AppCompatButton
-    private lateinit var galleryButton: Button
+    private lateinit var galleryButton: AppCompatButton
     private lateinit var textureView: TextureView
     private val orientation = SparseIntArray().apply {
         append(Surface.ROTATION_0, 90)

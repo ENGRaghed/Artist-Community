@@ -35,7 +35,7 @@
         app:layout_constraintVertical_bias="0.923" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/gallery_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -45,7 +45,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="90dp"
-        android:background="@drawable/gallery" />
+        android:background="@drawable/gallery"
+        android:backgroundTint="@color/white"/>
 
 
 </RelativeLayout>
