@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
@@ -110,15 +111,16 @@ class EditProfile : Fragment() {
                 ?.addOnCompleteListener { task ->
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
-                        Toast.makeText(context, "Profile Updated", Toast.LENGTH_LONG).show()
+                        Snackbar.make(view,"تم تحديث الملف الشخصي",Snackbar.LENGTH_LONG).show()
+                       // Toast.makeText(context, "Profile Updated", Toast.LENGTH_LONG).show()
 
                     } else {
-                        Toast.makeText(context, task.exception?.message!!, Toast.LENGTH_LONG).show()
+                        Snackbar.make(view, task.exception?.message!!, Snackbar.LENGTH_LONG).show()
 
                     }
                 }
             if (!::imageUri.isInitialized) {
-                Toast.makeText(context, "select image", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "اختر صورة", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             Log.i("track Pick Photo :", "$imageUri")
@@ -133,11 +135,6 @@ class EditProfile : Fragment() {
                 FirebaseDatabase.getInstance().getReference("Users").child(it1).setValue(user)
             }
         }
-//add it later
-//        text_phone.setOnClickListener {
-//
-//            getView()?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.actionVerifyPhone) }
-//        }
 
     }
 

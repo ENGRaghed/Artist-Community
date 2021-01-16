@@ -34,12 +34,12 @@ class RegisterFragment : Fragment() {
         val signUpButton = view.findViewById<Button>(R.id.sign_up_button)
         signUpButton.setOnClickListener {
             if (name.text.isNullOrEmpty()) {
-                name.error = "enter name !!"
+                name.error = "ادخل اسم المستخدم!"
                 name.requestFocus()
                 return@setOnClickListener
             }
             if (email.text.isNullOrEmpty()) {
-                email.error = "enter email !!"
+                email.error = "ادخل البريد الالكتروني!"
                 email.requestFocus()
                 return@setOnClickListener
             }
@@ -49,22 +49,22 @@ class RegisterFragment : Fragment() {
 //                return@setOnClickListener
 //            }
             if (password.text.isNullOrEmpty()) {
-                password.error = "enter password !!"
+                password.error = "ادخل الرقم السري!"
                 password.requestFocus()
                 return@setOnClickListener
             }
             if (confirmPassword.text.isNullOrEmpty()) {
-                confirmPassword.error = "enter password !!"
+                confirmPassword.error = "ادخل الرقم السري!"
                 confirmPassword.requestFocus()
                 return@setOnClickListener
             }
             if (confirmPassword.text.length < 6) {
-                confirmPassword.error = "enter  password !!"
+                confirmPassword.error = "ادخل الرقم السري!"
                 confirmPassword.requestFocus()
                 return@setOnClickListener
             }
             if (confirmPassword.text.toString() != password.text.toString()) {
-                confirmPassword.error = "enter confirem password !!"
+                confirmPassword.error = "ادخل الرقم السري للتحقق!"
                 confirmPassword.requestFocus()
                 return@setOnClickListener
             }

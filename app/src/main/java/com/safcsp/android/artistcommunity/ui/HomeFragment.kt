@@ -124,7 +124,7 @@ class HomeFragment : Fragment() {
             Log.i("profileImage",item.profileImage.toString())
             if(!item.profileImage.isNullOrEmpty()) {
                 val transformation: Transformation = RoundedTransformationBuilder()
-                    .borderColor(Color.BLACK)
+                   // .borderColor(Color.BLACK)
                     .borderWidthDp(3F)
                     .cornerRadiusDp(30F)
                     .oval(false)
