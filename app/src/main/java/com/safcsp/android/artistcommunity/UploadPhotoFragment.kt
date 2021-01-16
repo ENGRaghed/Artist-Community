@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -82,6 +83,9 @@ class UploadPhotoFragment : Fragment() {
                     Log.e("UploadPhotoFragment", it.toString())
                 }
             }
+
+            //
+            findNavController().navigate(R.id.action_uploadPhotoFragment_to_homeFragment)
         }
         return view
     }

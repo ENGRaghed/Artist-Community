@@ -48,7 +48,7 @@ class ChangePassword : Fragment() {
             val password = edit_text_password.text.toString().trim()
 
             if (password.isEmpty()) {
-                edit_text_password.error = "Password required"
+                edit_text_password.error = "ادخل كلمة السر"
                 edit_text_password.requestFocus()
                 return@setOnClickListener
             }
@@ -66,7 +66,7 @@ class ChangePassword : Fragment() {
                                 layoutUpdatePassword.visibility = View.VISIBLE
                             }
                             task.exception is FirebaseAuthInvalidCredentialsException -> {
-                                edit_text_password.error = "Invalid Password"
+                                edit_text_password.error = "كلمة المرور غير صحيحة"
                                 edit_text_password.requestFocus()
                             }
                             else -> Toast.makeText(context,task.exception?.message!!.toString(),Toast.LENGTH_LONG).show()
@@ -81,13 +81,13 @@ class ChangePassword : Fragment() {
             val password = edit_text_new_password.text.toString().trim()
 
             if(password.isEmpty() || password.length < 6){
-                edit_text_new_password.error = "atleast 6 char password required"
+                edit_text_new_password.error = "يجب ادخال 6 احرف على الاقل"
                 edit_text_new_password.requestFocus()
                 return@setOnClickListener
             }
 
             if(password != edit_text_new_password_confirm.text.toString().trim()){
-                edit_text_new_password_confirm.error = "password did not match"
+                edit_text_new_password_confirm.error = "كلمتا المرور غير متطابقة"
                 edit_text_new_password_confirm.requestFocus()
                 return@setOnClickListener
             }
@@ -100,7 +100,7 @@ class ChangePassword : Fragment() {
 //                            val action = UpdatePasswordFragmentDirections.actionPasswordUpdated()
 //                            Navigation.findNavController(it).navigate(action)
                             getView()?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.changePassword) }
-                            Toast.makeText(context,"Password Updated",Toast.LENGTH_LONG).show()
+                            Toast.makeText(context,"تم تحديث كلمة المرور",Toast.LENGTH_LONG).show()
 
                         }else{
                             Toast.makeText(context,task.exception?.message!!,Toast.LENGTH_LONG).show()

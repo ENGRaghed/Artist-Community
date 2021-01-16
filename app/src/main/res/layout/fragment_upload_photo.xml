@@ -22,12 +22,15 @@
 
     <EditText
         android:id="@+id/caption"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="62dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/frame"
         android:hint="تعليق.."
         android:inputType="textMultiLine"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"

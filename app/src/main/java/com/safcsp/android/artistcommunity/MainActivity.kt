@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                 .into(userPhoto)
             val userName=header.findViewById<TextView>(R.id.userName)
             userName.setText(user.displayName)
-//            edit_text_phone.text = user.phoneNumber
         }
     }
 

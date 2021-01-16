@@ -83,7 +83,7 @@ class LoginFragment : Fragment() {
     }
 private fun forgetPassword(email:EditText){
     if(email.text.toString().isEmpty()){
-        email.error = "أدخل الحساب الشخصي"
+        email.error = "ادخل البريد الالكتروني"
         email.requestFocus()
 
         return
@@ -94,7 +94,7 @@ private fun forgetPassword(email:EditText){
     loginViewModel.appRepository.firebaseAuth
         .sendPasswordResetEmail(email.text.toString().trim()).addOnCompleteListener {task->
         if(task.isSuccessful){
-            Toast.makeText(context,"Email Sent",Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"تم ارسال رسالة",Toast.LENGTH_LONG).show()
         }
 
     }
